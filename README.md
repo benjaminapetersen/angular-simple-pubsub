@@ -9,8 +9,8 @@ of services, directives, etc.
 
 ```javascript
 
-Usage in in any angular component supporting injection.
-Created with directives & services in mind, not just controllers
+// Usage in any angular component supporting injection.
+// Created with directives & services in mind, not just controllers
 .controller('myController', ['pubsub', function(pubsub) {
 
      // setup a couple of subscriptions
