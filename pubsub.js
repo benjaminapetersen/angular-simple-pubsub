@@ -3,12 +3,11 @@ angular.module('pubsub', [
 ])
 
 .factory('pubsub', function() {
-    var subscriptions = {},
-        hasOwnProp = subscriptions.hasOwnProperty;
+    var subscriptions = {};
 
     return {
         subscribe: function(subscription, subscriber) {
-            if(!hasOwnProp.call(subscriptions, subscription)) {
+            if(!subscriptions[subscription]) {
                 subscriptions[subscription] = [];
             }
 
@@ -24,7 +23,7 @@ angular.module('pubsub', [
 
         },
         publish: function(subscription, data) {
-            if(!hasOwnProp.call(subscriptions, subscription)) {
+            if(!subscriptions[subscription]) {
                 return;
             }
             subscriptions[subscription].forEach(function(subscriber) {
