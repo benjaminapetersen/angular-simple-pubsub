@@ -23,6 +23,11 @@ angular.module('pubsub', [
 
         },
         publish: function(subscription, data) {
+
+            // TODO: convert to a provider & provide configuration
+            // to set a severity to failure to publish.
+            // Default should probably be at least a warning. Perhaps
+            // set a level or provide a callback function...?
             if(!subscriptions[subscription]) {
                 return;
             }
