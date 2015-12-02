@@ -43,6 +43,29 @@ of services, directives, etc.
 
 ```
 
+## Additional
+
+There are two methods to defer publication of data.  The first is `.publishAsync()`, which
+allows for an arbitrary timeout with a default of `0`.
+
+```javascript
+    pubsub.publishAsync('foo', { msg: 'Aloha, World!'}, 100);
+```
+
+And then there is a promise style method for delaying publication.  This is provided for
+convenience, one could easily use `$q.when().then()` directly with pubsub in the chain.
+
+```javascript
+    pubsub
+        .when(function() {
+            return true;
+        })
+        .thenPublish('foo', {msg: 'Konnichiwa, World!'})
+
+```
+
+
+
 ## Advanced Configuration
 
 Pubsub is a provider and currently allows you to configure the default publish
@@ -75,5 +98,8 @@ angular.module('pubsubapp', [
     }
 ]);
 
-
 ```
+## Utilities
+
+There are three utility methods provided. `pubsub.utils.get(subscription)`
+can be used to get access to a single subscriptions list of callbacks, or the entire subscription map (if no subscription name provided).  `pubsub.utils.clear(subscription)` will clear out all callbacks for a subscription.  `pubsub.utils.clean()` will reset the entire subscription map.
