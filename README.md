@@ -5,7 +5,7 @@ using scopes for pub/sub that feels like a smell to me, especially in the contex
 of services, directives, etc.
 
 
-# Usage
+## Basic Usage
 
 ```javascript
 
@@ -40,5 +40,40 @@ of services, directives, etc.
      pubsub.clean();
 
 }]);
+
+```
+
+## Advanced Configuration
+
+Pubsub is a provider and currently allows you to configure the default publish
+fallback function.  This is especially useful for debugging.
+
+```javascript
+
+angular.module('pubsubapp', [
+    'pubsub'
+])
+.config([
+    'pubsubProvider',
+    function(pubsubProvider) {
+        pubsubProvider.setPublishFallback(function(sub, data) {
+            console.info('SHIZZLES!', sub, data);
+        });
+    }
+])
+.controller('pubsub-controller', [
+    'pubsub',
+    function(pubsub) {
+        var count = 0;
+
+        // no 'subscribe' to the following event anywhere will cause the fallback
+        // function to be called
+
+        setInterval(function() {
+            pubsub.publish('some:random/thing');
+        }, 1000);
+    }
+]);
+
 
 ```
