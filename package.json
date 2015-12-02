@@ -1,6 +1,6 @@
 {
   "name": "angular-simple-pubsub",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An angular module allowing arbitrary data to be injected & rendered in UI",
   "authors": [
     "benjaminapetersen <admin@benjaminapetersen.me>"

@@ -1,0 +1,101 @@
+<html ng-app="pubsubapp">
+<head>
+    <title>Angular Simple PubSub | Demo</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<h1>PubSub Demo</h1>
+<p>Open console to view.</p>
+<div ng-controller="pubsub-controller"></div>
+<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="./pubsub.js"></script>
+<script>
+
+angular.module('pubsubapp', [
+    'pubsub'
+])
+// Example of overriding the fallback function which is
+// used when there are no subscribers for a particular channel
+.config([
+    'pubsubProvider',
+    function(pubsubProvider) {
+        pubsubProvider.setPublishFallback(function(sub, data) {
+            console.info('channel:default', sub, data, '(no subscribers)');
+        });
+    }
+])
+.controller('pubsub-controller', [
+    '$q',
+    '$timeout',
+    'pubsub',
+    function($q, $timeout, pubsub) {
+        var count = 0,
+            events = [
+                pubsub.subscribe('channel:1', function(data) {
+                     console.log('channel:1', count++, data);
+                }),
+                pubsub.subscribe('channel:2', function(data) {
+                     console.log('channel:2', count++, data);
+                }),
+                pubsub.subscribe('channel:3', function(data) {
+                     console.log('channel:3', count++, data);
+                })
+            ];
+
+        // use the publish fallback fn
+        $timeout(function() {
+            pubsub.publish('channel:default');
+        }, 1000);
+
+        // standard publish
+        $timeout(function() {
+            pubsub.publish('channel:1');
+        }, 2000);
+
+        // async publish
+        $timeout(function() {
+            pubsub.publishAsync('channel:2', {msg: 'Hello from async'}, 200);
+        }, 3000);
+
+        // promise based publish
+        $timeout(function() {
+            pubsub
+                .when(function() {
+                    return true
+                })
+                .thenPublish('channel:3', {msg: 'Greetings from promise resolution'});
+            pubsub
+                .when($q.all([1,2,3]))
+                .thenPublish('channel:3', {msg: 'Hello again'})
+        }, 4000);
+
+
+        // unsubscribe all
+        $timeout(function() {
+            events.forEach(function(evt) {
+                evt && evt.unsubscribe && evt.unsubscribe();
+            });
+        }, 5000);
+
+        // with no subscribers, the default will be called again
+        $timeout(function() {
+            pubsub.publish('channel:1', {msg: 'channel:1 now has no subscribers'})
+        }, 6000);
+
+        // alternative subscribe / unsubscribe mechanism
+        $timeout(function() {
+            var subscription = pubsub.subscribe('channel:4', function(data) {
+                console.log('channel:4', count++, data);
+            });
+            pubsub.publish('channel:4', 'Alternative subscribe/unsubscribe');
+            pubsub.unsubscribe(subscription);
+            pubsub.publish('channel:4', 'Alternative subscribe/unsubscribe 2');
+        }, 7000);
+    }
+]);
+
+</script>
+</body>
+</html>
