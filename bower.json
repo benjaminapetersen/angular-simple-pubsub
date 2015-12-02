@@ -1,0 +1,19 @@
+{
+  "name": "angular-simple-pubsub",
+  "version": "1.0.1",
+  "homepage": "https://github.com/benjaminapetersen/angular-simple-pubsub",
+  "license": "MIT",
+  "main" : [
+    "pubsub.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.15"
+  }
+}
