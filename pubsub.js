@@ -61,13 +61,13 @@
                         },
                         // .when(fn).thenPublish(subscription, data) provides a
                         // promise deferred mechanism
-                        when: function(fn) {
+                        when: function(val) {
                             var publish = this.publish.bind(this);
                             return {
                                 thenPublish: function(subscription, data) {
                                     return $q
-                                            .when(fn)
-                                            .then(function() {
+                                            .when(val)
+                                            .then(function(msg) {
                                                 publish(subscription, data);
                                             }.bind(this));
                                 }
