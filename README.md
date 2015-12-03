@@ -54,12 +54,18 @@ And then there is a promise style method for delaying publication.  This is prov
 convenience, one could easily use `$q.when().then()` directly with pubsub in the chain.
 
 ```javascript
-    pubsub
-        .when(function() {
-            return true;
-        })
-        .thenPublish('foo', {msg: 'Konnichiwa, World!'})
+    // contrived promise:
+    var makePromise = function() {
+        var defer = $q.defer();
+        $timeout(function() {
+            defer.resolve('delay resolution');
+        }, 3000);
+        return defer.promise;
+    };
 
+    pubsub
+        .when(makePromise())
+        .thenPublish('foo', {msg: 'Konnichiwa, World!'});
 ```
 
 ## Advanced Configuration

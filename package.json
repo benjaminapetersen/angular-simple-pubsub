@@ -1,6 +1,6 @@
 {
   "name": "angular-simple-pubsub",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A super simple pub/sub module for angular.js",
   "authors": [
     "benjaminapetersen <admin@benjaminapetersen.me>"
