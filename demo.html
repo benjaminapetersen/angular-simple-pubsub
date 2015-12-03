@@ -61,10 +61,17 @@ angular.module('pubsubapp', [
 
         // promise based publish
         $timeout(function() {
+            // contrived promise:
+            var makePromise = function() {
+                var defer = $q.defer();
+                $timeout(function() {
+                    defer.resolve('delay resolution');
+                }, 3000);
+                return defer.promise;
+            }
+
             pubsub
-                .when(function() {
-                    return true
-                })
+                .when(makePromise())
                 .thenPublish('channel:3', {msg: 'Greetings from promise resolution'});
             pubsub
                 .when($q.all([1,2,3]))
