@@ -4,8 +4,6 @@
     angular.module('pubsub', [
 
     ])
-
-
     .provider('pubsub', [
         function() {
             var subscriptions = {};
@@ -37,7 +35,6 @@
                                 unsubscribe: function() {
                                     //delete subscriptions[subscription][index];
                                     subscriptions[subscription].splice(index, 1);
-                                    console.log('count for', subscription, subscriptions[subscription].length, subscriptions[subscription][0]);
                                 }
                             };
                         },
