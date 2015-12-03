@@ -1,7 +1,7 @@
 {
   "name": "angular-simple-pubsub",
   "description": "A super simple pub/sub module for angular.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://github.com/benjaminapetersen/angular-simple-pubsub",
   "license": "MIT",
   "main" : [
