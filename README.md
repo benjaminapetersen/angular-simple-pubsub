@@ -1,9 +1,7 @@
 # angular-simple-pubsub
-A super simple pub/sub module for angular. This is a fresh and experimental module
-for doing pub/sub without using `$scope` or `$rootScope`.  There is something about
-using scopes for pub/sub that feels like a smell to me, especially in the context
-of services, directives, etc.
-
+A super simple pub/sub module for angular. This module provides a method for doing
+pub/sub without using `$scope` or `$rootScope`.  Using scopes for pub/sub feels
+a bit like a code smell, angular-simple-pubsub provides functionality as a service.
 
 ## Basic Usage
 
@@ -27,7 +25,7 @@ of services, directives, etc.
 
 
      // take a look at all the current subscriptions
-     pubsub.utils.getAll() // -> {'foo:bar': Array[1], '/baz/bam': Array[1]}
+     pubsub.utils.get() // -> {'foo:bar': Array[1], '/baz/bam': Array[1]}
 
      // be sure to clean up after yourself!
      subscription1.unsubscribe();
@@ -63,8 +61,6 @@ convenience, one could easily use `$q.when().then()` directly with pubsub in the
         .thenPublish('foo', {msg: 'Konnichiwa, World!'})
 
 ```
-
-
 
 ## Advanced Configuration
 
@@ -103,3 +99,5 @@ angular.module('pubsubapp', [
 
 There are three utility methods provided. `pubsub.utils.get(subscription)`
 can be used to get access to a single subscriptions list of callbacks, or the entire subscription map (if no subscription name provided).  `pubsub.utils.clear(subscription)` will clear out all callbacks for a subscription.  `pubsub.utils.clean()` will reset the entire subscription map.
+
+You may also view the demo.html page.
